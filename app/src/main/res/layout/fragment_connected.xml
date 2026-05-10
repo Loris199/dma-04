@@ -7,23 +7,108 @@
     tools:context=".MainActivity">
 
     <!-- TODO vous placerez dans ce layout toutes les vues nécessaires aux intéractions avec le périphérique BLE -->
+    <TextView
+        android:id="@+id/textTemperatureTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_temperature_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textClicksTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonTemperature"/>
     <Button
         android:id="@+id/buttonTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/temperature"
+        android:text="@string/ble_temperature_read"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textClicksTitle"
+        app:layout_constraintStart_toEndOf="@id/textTemperatureTitle"
         app:layout_constraintEnd_toEndOf="@id/textTemperature"/>
-
     <TextView
         android:id="@+id/textTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/buttonTemperature"
-        app:layout_constraintTop_toTopOf="@id/buttonTemperature"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/buttonTemperature" />
+        app:layout_constraintBottom_toTopOf="@id/textClicksTitle"/>
+
+    <TextView
+        android:id="@+id/textClicksTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_clickcounter_title"
+        app:layout_constraintTop_toBottomOf="@id/buttonTemperature"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textClicks"
+        app:layout_constraintBottom_toTopOf="@id/textTimeTitle"/>
+    <TextView
+        android:id="@+id/textClicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textClicksTitle"
+        app:layout_constraintTop_toBottomOf="@id/buttonTemperature"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textTimeTitle"/>
+
+    <TextView
+        android:id="@+id/textTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_currenttime_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textClicksTitle"
+        app:layout_constraintEnd_toStartOf="@id/buttonUpdateTime"
+        app:layout_constraintBottom_toTopOf="@id/buttonValue"/>
+    <Button
+        android:id="@+id/buttonUpdateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_currenttime_set"
+        app:layout_constraintStart_toEndOf="@id/textTimeTitle"
+        app:layout_constraintTop_toBottomOf="@id/textClicksTitle"
+        app:layout_constraintEnd_toStartOf="@id/textTime"
+        app:layout_constraintBottom_toTopOf="@id/buttonValue"/>
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textClicksTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonUpdateTime"
+        app:layout_constraintBottom_toTopOf="@id/buttonValue"/>
+
+    <TextView
+        android:id="@+id/textValueTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_sendvalue_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTimeTitle"
+        app:layout_constraintEnd_toStartOf="@id/buttonValue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <Button
+        android:id="@+id/buttonValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_sendvalue_send"
+        app:layout_constraintTop_toBottomOf="@id/textTimeTitle"
+        app:layout_constraintStart_toEndOf="@id/textValueTitle"
+        app:layout_constraintEnd_toStartOf="@id/inputValue"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <EditText
+        android:id="@+id/inputValue"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_value"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/textTimeTitle"
+        app:layout_constraintStart_toEndOf="@id/buttonValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

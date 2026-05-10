@@ -151,6 +151,67 @@ class DMABleManager(applicationContext: Context, private val dmaServiceListener:
         return false
     }
 
+    fun writeInteger(value: Int): Boolean {
+        integerChar?.let { characteristic ->
+            val data = byteArrayOf(
+                (value and 0xFF).toByte(),
+                ((value shr 8) and 0xFF).toByte(),
+                ((value shr 16) and 0xFF).toByte(),
+                ((value shr 24) and 0xFF).toByte()
+            )
+
+            writeCharacteristic(characteristic, data).enqueue()
+
+            return true
+        }
+
+        return false
+    }
+
+    fun writeCurrentTime(): Boolean {
+        currentTimeChar?.let { characteristic ->
+            val calendar = Calendar.getInstance()
+
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val second = calendar.get(Calendar.SECOND)
+
+            val dayOfWeek = when (calendar.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.MONDAY -> 1
+                Calendar.TUESDAY -> 2
+                Calendar.WEDNESDAY -> 3
+                Calendar.THURSDAY -> 4
+                Calendar.FRIDAY -> 5
+                Calendar.SATURDAY -> 6
+                Calendar.SUNDAY -> 7
+                else -> 1
+            }
+
+            val data = byteArrayOf(
+                (year and 0xFF).toByte(),
+                ((year shr 8) and 0xFF).toByte(),
+                month.toByte(),
+                day.toByte(),
+                hour.toByte(),
+                minute.toByte(),
+                second.toByte(),
+                dayOfWeek.toByte(),
+                0x00,
+                0x00,
+            )
+
+            writeCharacteristic(characteristic, data)
+                .enqueue()
+
+            return true
+        }
+
+        return false
+    }
+
     companion object {
         private val TAG = DMABleManager::class.java.simpleName
     }

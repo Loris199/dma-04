@@ -35,6 +35,28 @@ class BleConnectedFragment : Fragment(), MenuProvider {
                 binding.textTemperature.text = "$it C"
             }
         }
+
+        bleViewModel.currentTime.observe(requireActivity()) { time ->
+            time?.let {
+                binding.textTime.text = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()).format(it.time)
+            }
+        }
+
+        bleViewModel.buttonClick.observe(requireActivity()) { click ->
+            click?.let {
+                binding.textClicks.text = "$it"
+            }
+        }
+
+        binding.buttonUpdateTime.setOnClickListener {
+            bleViewModel.setTime()
+        }
+
+        binding.buttonValue.setOnClickListener {
+            binding.inputValue.text.toString().toIntOrNull()?.let {
+                bleViewModel.sendValue(it)
+            }
+        }
     }
 
     override fun onResume() {
