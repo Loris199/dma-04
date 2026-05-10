@@ -132,8 +132,23 @@ class DMABleManager(applicationContext: Context, private val dmaServiceListener:
             On placera des méthodes similaires pour les autres opérations
                 Cf. méthode writeCharacteristic().enqueue()
         */
+        temperatureChar?.let { characteristic ->
+            readCharacteristic(characteristic)
+                .with { _, data ->
+                    data.value?.let {
+                        val temperature = ((it[0].toInt() and 0xFF) or ((it[1].toInt() and 0xFF) shl 8)) / 10f
 
-        return false //FIXME
+                        Log.d("TEMP", "$temperature C")
+
+                        dmaServiceListener?.temperatureUpdate(temperature)
+                    }
+                }
+                .enqueue()
+
+            return true
+        }
+
+        return false
     }
 
     companion object {
